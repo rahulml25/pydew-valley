@@ -154,12 +154,12 @@ class Level:
     if self.raining:
       self.soil_layer.water_all()
 
-    self.start_color = [255, 255, 255]
+    self.sky.start_color = [255, 255, 255]
 
   def plant_collision(self):
     if self.soil_layer.plant_sprites:
       for plant in self.soil_layer.plant_sprites.sprites():
-        if plant.harvestable and plant.rect.collidepoint(self.player.hitbox):
+        if plant.harvestable and plant.rect.colliderect(self.player.hitbox):
           self.player_add(plant.plant_type)
           plant.kill()
           Particle(
