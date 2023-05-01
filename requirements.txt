@@ -1,6 +1,5 @@
 autopep8==1.7.0
 pycodestyle==2.9.1
-pygame==2.1.2
+pygame==2.3.0
 PyTMX==3.31
-pywin32==304
 toml==0.10.2
