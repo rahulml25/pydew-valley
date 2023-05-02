@@ -2,17 +2,12 @@ import pygame
 import sys
 from settings import *
 from level import Level
-import win32gui
-import win32con
+
 
 class Game:
 
   def __init__(self):
-    # hiding the console
-    fore_ground = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(fore_ground, win32con.SW_HIDE)
-
-    # init
+    # initializing game
     pygame.init()
     self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_icon(pygame.image.load(GRAPHICS_DIR / 'icon/icon.png'))

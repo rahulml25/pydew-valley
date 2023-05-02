@@ -42,8 +42,9 @@ class Plant(pygame.sprite.Sprite):
 
     # sprite setup
     self.image = self.frames[self.age]
-    self.y_offset = -16 if plant_type=='corn' else -8
-    self.rect = self.image.get_rect(midbottom=soil.rect.midbottom+pygame.Vector2(0, self.y_offset))
+    self.y_offset = -16 if plant_type == 'corn' else -8
+    self.rect = self.image.get_rect(
+      midbottom=soil.rect.midbottom + pygame.Vector2(0, self.y_offset))
     self.z = LAYERS['ground plant']
 
   def grow(self):
@@ -52,14 +53,15 @@ class Plant(pygame.sprite.Sprite):
 
       if int(self.age) > 0:
         self.z = LAYERS['main']
-        self.hitbox = self.rect.copy().inflate(-26,-self.rect.height*0.4)
+        self.hitbox = self.rect.copy().inflate(-26, -self.rect.height * 0.4)
 
       if self.age >= self.max_age:
         self.age = self.max_age
         self.harvestable = True
 
       self.image = self.frames[int(self.age)]
-      self.rect = self.image.get_rect(midbottom=self.soil.rect.midbottom+pygame.Vector2(0, self.y_offset))
+      self.rect = self.image.get_rect(
+        midbottom=self.soil.rect.midbottom + pygame.Vector2(0, self.y_offset))
 
 
 class SoilLayer:
@@ -138,7 +140,7 @@ class SoilLayer:
         if 'X' in cell and 'W' not in cell:
           cell.append('W')
 
-          x, y = idx_col*TILE_SIZE, idx_row*TILE_SIZE
+          x, y = idx_col * TILE_SIZE, idx_row * TILE_SIZE
           WaterTile(
             pos=(x, y),
             surf=choice(self.water_surfs),
@@ -155,7 +157,7 @@ class SoilLayer:
           cell.remove('W')
 
   def check_watered(self, pos):
-    x, y = pos[0]//TILE_SIZE, pos[1]//TILE_SIZE
+    x, y = pos[0] // TILE_SIZE, pos[1] // TILE_SIZE
     cell = self.grid[y][x]
     is_watered = 'W' in cell
     return is_watered
@@ -165,12 +167,12 @@ class SoilLayer:
       if soil_sprite.rect.collidepoint(target_pos):
         self.plant_sound.play()
 
-        x, y = soil_sprite.rect.x//TILE_SIZE, soil_sprite.rect.y//TILE_SIZE
+        x, y = soil_sprite.rect.x // TILE_SIZE, soil_sprite.rect.y // TILE_SIZE
         if 'P' not in self.grid[y][x]:
           self.grid[y][x].append('P')
           Plant(
             plant_type=seed,
-            groups=[self.all_sprites,self.plant_sprites,self.collision_sprites],
+            groups=[self.all_sprites, self.plant_sprites, self.collision_sprites],
             soil=soil_sprite,
             check_watered=self.check_watered
           )
@@ -194,31 +196,46 @@ class SoilLayer:
           tile_type = 'o'
 
           # all sides
-          if all([t, b, r, l]): tile_type = 'x'
+          if all([t, b, r, l]):
+            tile_type = 'x'
 
           # horizontal tiles only
           elif not any([t, b]):
-            if (l and r): tile_type = 'lr'
-            elif l: tile_type = 'r'
-            elif r: tile_type = 'l'
+            if (l and r):
+              tile_type = 'lr'
+            elif l:
+              tile_type = 'r'
+            elif r:
+              tile_type = 'l'
 
           # vertical tiles only
           elif not any([l, r]):
-            if (t and b): tile_type = 'tb'
-            elif t: tile_type = 'b'
-            elif b: tile_type = 't'
+            if (t and b):
+              tile_type = 'tb'
+            elif t:
+              tile_type = 'b'
+            elif b:
+              tile_type = 't'
 
           # corner
-          elif all([b, l]) and not any([t, r]): tile_type = 'tr'
-          elif all([b, r]) and not any([t, l]): tile_type = 'tl'
-          elif all([t, l]) and not any([b, r]): tile_type = 'br'
-          elif all([t, r]) and not any([b, l]): tile_type = 'bl'
+          elif all([b, l]) and not any([t, r]):
+            tile_type = 'tr'
+          elif all([b, r]) and not any([t, l]):
+            tile_type = 'tl'
+          elif all([t, l]) and not any([b, r]):
+            tile_type = 'br'
+          elif all([t, r]) and not any([b, l]):
+            tile_type = 'bl'
 
           # T shapes
-          elif all([t, b, r]) and not l: tile_type = 'tbr'
-          elif all([t, b, l]) and not r: tile_type = 'tbl'
-          elif all([l, r, t]) and not b: tile_type = 'lrb'
-          elif all([l, r, b]) and not t: tile_type = 'lrt'
+          elif all([t, b, r]) and not l:
+            tile_type = 'tbr'
+          elif all([t, b, l]) and not r:
+            tile_type = 'tbl'
+          elif all([l, r, t]) and not b:
+            tile_type = 'lrb'
+          elif all([l, r, b]) and not t:
+            tile_type = 'lrt'
 
           SoilTile(
             pos=(idx_col * TILE_SIZE, idx_row * TILE_SIZE),

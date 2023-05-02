@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from support import import_folder
-from timer import Timer
+from .timer import Timer
 from sprites import Interaction
 from soil import SoilLayer
 
@@ -163,7 +163,8 @@ class Player(pygame.sprite.Sprite):
         self.selected_seed = self.seeds[self.seed_index]
 
       if keys[pygame.K_RETURN]:
-        collided_interaction_sprite: list[Interaction] = pygame.sprite.spritecollide(self, self.interaction, False)
+        collided_interaction_sprite: list[Interaction] = pygame.sprite.spritecollide(
+          self, self.interaction, False)
         if collided_interaction_sprite:
           if collided_interaction_sprite[0].name == 'Trader':
             self.toggle_shop()

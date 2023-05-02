@@ -1,7 +1,7 @@
 import pygame
 from settings import *
 from player import Player
-from timer import Timer
+from .timer import Timer
 
 
 class Menu:
